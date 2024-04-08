@@ -17,8 +17,6 @@ export default {
         read: {
           columns: [
             {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', style: 'width: 50px'},
-            {name: 'response', label: this.$tr('iwebhooks.cms.form.response'), field: 'response', align: 'rigth'},
-            {name: 'httpStatus', label: this.$tr('iwebhooks.cms.form.httpStatus'), field: 'httpStatus', align: 'left'},
             {
               name: 'hook',
               label: this.$tr('iwebhooks.cms.title.hook'),
@@ -26,6 +24,8 @@ export default {
               align: 'left',
               format: val => val ? val.title : '-'
             },
+            {name: 'httpStatus', label: this.$tr('iwebhooks.cms.form.httpStatus'), field: 'httpStatus', align: 'left'},
+            {name: 'response', label: this.$tr('iwebhooks.cms.form.response'), field: 'response', align: 'rigth'},
             {
               name: 'created_at', label: this.$tr('isite.cms.form.createdAt'), field: 'createdAt', align: 'left',
               format: val => val ? this.$trd(val) : '-',
