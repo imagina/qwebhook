@@ -1,9 +1,27 @@
-<template></template>
+<template>
+  <master-modal
+      v-model="showModal"
+      @hide="resetModal()"
+      :title="log ? `ID: ${log.hook.id} - Hook (${log.hook.title})` : ''"
+  >
+    <div class="box" v-if="!!log">
+      <section>
+        <p class="text-subtitle1 text-primary">{{ $tr('iwebhooks.cms.form.httpStatus') }}: <b>{{ log.httpStatus }}</b></p>
+      </section>
+      <section class="q-mt-sm">
+        <p class="text-subtitle2">{{ $tr('iwebhooks.cms.form.response') }}:</p>
+        {{ log.response }}
+      </section>
+    </div>
+  </master-modal>
+</template>
 <script>
 export default {
   data() {
     return {
-      crudId: this.$uid()
+      crudId: this.$uid(),
+      showModal: false,
+      log: null
     }
   },
   computed: {
@@ -16,13 +34,14 @@ export default {
         create: false,
         read: {
           columns: [
-            {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', style: 'width: 50px'},
+            {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', action: (col) => this.openModal(col)},
             {
               name: 'hook',
               label: this.$tr('iwebhooks.cms.title.hook'),
               field: 'hook',
               align: 'left',
-              format: val => val ? val.title : '-'
+              format: val => val ? val.title : '-',
+              action: (col) => this.openModal(col)
             },
             {name: 'httpStatus', label: this.$tr('iwebhooks.cms.form.httpStatus'), field: 'httpStatus', align: 'left'},
             {name: 'response', label: this.$tr('iwebhooks.cms.form.response'), field: 'response', align: 'rigth'},
@@ -47,5 +66,14 @@ export default {
       return this.$store.state.qcrudComponent.component[this.crudId] || {}
     }
   },
+  methods: {
+    resetModal() {
+      this.showModal = false
+    },
+    openModal(log) {
+      this.log = log
+      this.showModal = true
+    }
+  }
 }
 </script>

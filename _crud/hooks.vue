@@ -17,6 +17,7 @@ export default {
           title: this.$tr('iwebhooks.cms.title.newHook'),
         },
         read: {
+          showAs: 'grid',
           columns: [
             {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', align: 'left'},
             {name: 'title', label: this.$tr('isite.cms.form.title'), field: 'title', align: 'rigth'},
@@ -40,7 +41,10 @@ export default {
             },
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'left'},
           ],
-          requestParams: {include: 'category'}
+          requestParams: {include: 'category'},
+          grid: {
+            component: () => import('@imagina/qwebhook/_components/hookCard/index.vue'),
+          }
         },
         update: {
           title: this.$tr('iwebhooks.cms.title.updateHook'),
