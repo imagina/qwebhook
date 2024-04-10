@@ -1,9 +1,51 @@
-<template></template>
+<template>
+  <master-modal
+      v-model="showModal"
+      @hide="resetModal()"
+      :title="hook ? hook.title : ''"
+      :loading="loading"
+      :actions="actionsModal"
+  >
+    <div class="box" v-if="!!hook">
+      <section>
+        <!--Description-->
+        <label class="text-grey-7 q-mr-xs">{{ $tr('isite.cms.form.description') }}:</label>
+        <div v-html="hook.description"/>
+
+        <!--Call Every Minutes-->
+        <div class="q-mt-sm" v-if="!!hook.callEveryMinutes">
+          <label class="text-grey-7 q-mr-xs">{{ $tr('iwebhooks.cms.form.callEveryMinutes') }}:</label>
+          {{ hook.callEveryMinutes }}
+        </div>
+      </section>
+
+      <section>
+        <!--URL-->
+        <div class="q-my-sm" style="word-wrap: break-word">
+          <label class="text-grey-7 q-mr-xs">{{ $tr('iwebhooks.cms.form.endpoint') }}:</label>
+          <p class="ellipsis">{{ hook.endpoint }}</p>
+          <q-tooltip>
+            {{ hook.endpoint }}
+          </q-tooltip>
+        </div>
+        <!--Http Method-->
+        <div>
+          <label class="text-grey-7 q-mr-xs">{{ $tr('iwebhooks.cms.form.httpMethod') }}:</label> {{ hook.httpMethod }}
+        </div>
+      </section>
+
+    </div>
+  </master-modal>
+</template>
 <script>
 export default {
   data() {
     return {
-      crudId: this.$uid()
+      crudId: this.$uid(),
+      showModal: false,
+      hook: null,
+      loading: false,
+      loadingBtn: false,
     }
   },
   computed: {
@@ -17,12 +59,17 @@ export default {
           title: this.$tr('iwebhooks.cms.title.newHook'),
         },
         read: {
-          showAs: 'grid',
           columns: [
             {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', align: 'left'},
             {name: 'title', label: this.$tr('isite.cms.form.title'), field: 'title', align: 'rigth'},
+            {
+              name: 'endpoint',
+              label: this.$tr('iwebhooks.cms.form.endpoint'),
+              field: 'endpoint',
+              align: 'left',
+              action: (col) => this.openModal(col)
+            },
             {name: 'description', label: this.$tr('isite.cms.form.description'), field: 'description', align: 'rigth'},
-            {name: 'endpoint', label: this.$tr('iwebhooks.cms.form.endpoint'), field: 'endpoint', align: 'left'},
             {name: 'httpMethod', label: this.$tr('iwebhooks.cms.form.httpMethod'), field: 'httpMethod', align: 'rigth'},
             {
               name: 'category',
@@ -42,9 +89,14 @@ export default {
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'left'},
           ],
           requestParams: {include: 'category'},
-          grid: {
-            component: () => import('@imagina/qwebhook/_components/hookCard/index.vue'),
-          }
+          actions: [
+            {
+              icon: 'fa-regular fa-rocket',
+              tooltip: this.$tr('iwebhooks.cms.label.dispatch'),
+              color: 'blue',
+              action: (item) => this.openModal(item),
+            }
+          ]
         },
         update: {
           title: this.$tr('iwebhooks.cms.title.updateHook'),
@@ -148,7 +200,51 @@ export default {
     //Crud info
     crudInfo() {
       return this.$store.state.qcrudComponent.component[this.crudId] || {}
+    },
+    //Call to Action
+    actionsModal() {
+      return [
+        {
+          props: {
+            color: 'primary',
+            label: this.hook?.actionLabel ?? '',
+            loading: this.hook?.isLoading !== 0 || this.loadingBtn
+          },
+          action: () => this.runWebhook(this.hook.id)
+        }
+      ]
     }
   },
+  methods: {
+    resetModal() {
+      this.showModal = false
+      this.hook = null
+    },
+    //Open Modal
+    openModal(hook) {
+      this.showModal = true
+      this.getHook(hook.id)
+    },
+    //Get hook with id
+    async getHook(id) {
+      this.loading = true
+      const requestParams = {refresh: true}
+      // get a hook
+      await this.$crud.show('apiRoutes.qwebhook.hooks', id, requestParams)
+          .then(response => {
+            this.hook = response.data
+          }).catch(error => this.$alert.error(this.$tr('isite.cms.message.errorRequest')))
+      this.loading = false
+    },
+    // Dispathc webhook by id
+    async runWebhook(id) {
+      this.loadingBtn = true
+
+      await this.$crud.post(`${config('apiRoutes.qwebhook.hooks')}/dispatch/${id}`)
+          .catch(error => this.$alert.error(this.$tr('isite.cms.message.errorRequest')))
+
+      this.loadingBtn = false
+    }
+  }
 }
 </script>
