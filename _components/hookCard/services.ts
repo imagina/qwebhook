@@ -1,7 +1,7 @@
 import baseService from '@imagina/qcrud/_services/baseService'
 
 export default {
-  run(id = 0, params = {}): Promise<any> {
+  runHook(id = 0, params = {}): Promise<any> {
     return new Promise((resolve, reject) => {
       const requestParams = {...params}
       //Request

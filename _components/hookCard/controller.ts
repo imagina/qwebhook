@@ -11,28 +11,27 @@ export default function controller(props: any, emit: any) {
 
   // States
   const state = reactive({
+    loading: false
     // Key: Default Value
   })
 
   // Computed
-  const computeds = {
-  }
+  const computeds = {}
 
   // Methods
   const methods = {
     async runAction(hook) {
       try {
-        await service.run(hook.id)
+        state.loading = true
+        await service.runHook(hook.id)
         emit('refresh')
       } catch (e) {
         const message = e?.message ?? proxy.$tr('isite.cms.message.errorRequest')
         proxy.$alert.error(message)
       }
+
+      state.loading = false
     },
-    checkIsEmpty(val) {
-      if(Array.isArray(val)) return true
-      return Object.keys(val).length === 0
-    }
   }
 
 

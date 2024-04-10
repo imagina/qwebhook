@@ -22,31 +22,24 @@
           <label class="text-grey-7 q-mr-xs">{{ $tr('iwebhooks.cms.form.callEveryMinutes') }}:</label>
           {{ row.callEveryMinutes }}
         </div>
-      </q-card-section>
-      <!--Request info-->
-      <q-card-section>
-        <div class="text-center text-grey-7 text-subtitle1">Info del request</div>
+
         <!--URL-->
-        <div class="q-mb-sm" style="word-wrap: break-word">
-          <label class="text-grey-7 q-mr-xs">{{ $tr('iwebhooks.cms.form.endpoint') }}:</label> {{ row.endpoint }}
+        <div class="q-my-sm" style="word-wrap: break-word">
+          <label class="text-grey-7 q-mr-xs">{{ $tr('iwebhooks.cms.form.endpoint') }}:</label>
+          <p class="ellipsis">{{ row.endpoint }}</p>
+          <q-tooltip>
+            {{ row.endpoint }}
+          </q-tooltip>
         </div>
         <!--Http Method-->
         <div>
           <label class="text-grey-7 q-mr-xs">{{ $tr('iwebhooks.cms.form.httpMethod') }}:</label> {{ row.httpMethod }}
         </div>
-        <!--Headers-->
-        <div v-if="!checkIsEmpty(row.headers)">
-          <dynamic-field v-model="row.headers" :field="{type: 'json', props: { readonly: true, label: $tr('iwebhooks.cms.form.headers')}}" class="col-12 col-md-4 col-xl-3" />
-        </div>
-        <!--Body-->
-        <div v-if="!checkIsEmpty(row.body)">
-          <label class="text-grey-7 q-mr-xs">{{ $tr('iwebhooks.cms.form.body') }}:</label> {{ row.httpMethod }}
-        </div>
       </q-card-section>
       <!--Call to Action-->
       <q-card-actions align="right">
         <q-btn color="primary" size="md" rounded unelevated padding="xs md" @click="() => runAction(row)"
-               :label="row.actionLabel" :loading="row.isLoading !== 0"/>
+               :label="row.actionLabel" :loading="row.isLoading !== 0 || loading"/>
       </q-card-actions>
     </q-card>
   </div>

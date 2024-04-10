@@ -126,7 +126,7 @@ export default {
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qsite.configs',
-              select: {label: 'label', id: 'id'},
+              select: {label: 'label', id: 'value'},
               requestParams: {filter: {configName: 'Iwebhooks.config.httpMethodsOptions'}}
             }
           },
