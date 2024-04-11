@@ -4,9 +4,9 @@
       @hide="resetModal()"
       :title="log ? `ID: ${log.hook.id} - Hook (${log.hook.title})` : ''"
   >
-    <div class="box" v-if="!!log">
+    <div class="q-pa-sm" v-if="!!log" style="min-height: 150px;">
       <section>
-        <p class="text-subtitle1 text-primary">{{ $tr('iwebhooks.cms.form.httpStatus') }}: <b>{{ log.httpStatus }}</b></p>
+        <p class="text-subtitle1 text-blue-grey">{{ $tr('iwebhooks.cms.form.httpStatus') }}: <b>{{ log.httpStatus }}</b></p>
       </section>
       <section class="q-mt-sm">
         <p class="text-subtitle2">{{ $tr('iwebhooks.cms.form.response') }}:</p>
