@@ -93,6 +93,7 @@ export default {
             {
               icon: 'fa-regular fa-rocket',
               tooltip: this.$tr('iwebhooks.cms.label.dispatch'),
+              vIf: !!this.$auth.hasAccess('iwebhooks.hooks.dispatch'),
               color: 'blue',
               action: (item) => this.openModal(item),
             }
