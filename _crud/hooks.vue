@@ -184,6 +184,19 @@ export default {
               }
             },
           },
+          httpMethod: {
+            value: null,
+            type: 'select',
+            required: true,
+            props: {
+              label: `${this.$tr('iwebhooks.cms.form.httpMethod')}*`
+            },
+            loadOptions: {
+              apiRoute: 'apiRoutes.qsite.configs',
+              select: {label: 'label', id: 'value'},
+              requestParams: {filter: {configName: 'Iwebhooks.config.httpMethodsOptions'}}
+            }
+          },
           countryId: {
             value: null,
             type: 'select',
@@ -197,18 +210,12 @@ export default {
               filterByQuery: true
             }
           },
-          httpMethod: {
-            value: null,
-            type: 'select',
-            required: true,
+          redirectLink: {
+            value: '',
+            type: 'input',
             props: {
-              label: `${this.$tr('iwebhooks.cms.form.httpMethod')}*`
+              label: this.$tr('iwebhooks.cms.form.redirectLink'),
             },
-            loadOptions: {
-              apiRoute: 'apiRoutes.qsite.configs',
-              select: {label: 'label', id: 'value'},
-              requestParams: {filter: {configName: 'Iwebhooks.config.httpMethodsOptions'}}
-            }
           },
           body: {
             type: 'json',
