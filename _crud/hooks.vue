@@ -69,15 +69,29 @@ export default {
               align: 'left',
               action: (col) => this.openModal(col)
             },
-            {name: 'description', label: this.$tr('isite.cms.form.description'), field: 'description', align: 'rigth'},
-            {name: 'httpMethod', label: this.$tr('iwebhooks.cms.form.httpMethod'), field: 'httpMethod', align: 'rigth'},
             {
               name: 'category',
               label: this.$tr('isite.cms.form.category'),
               field: 'category',
-              align: 'rigth',
+              align: 'center',
               format: val => val?.title || '-',
             },
+            {
+              name: 'country',
+              label: this.$tr('isite.cms.label.country'),
+              field: 'country',
+              align: 'center',
+              format: val => val?.name || '-',
+            },
+            {
+              name: 'callEveryMinutes',
+              label: this.$tr('iwebhooks.cms.form.callEveryMinutes'),
+              field: 'callEveryMinutes',
+              align: 'center',
+              format: val => val ? this.$trn(val) : '-',
+            },
+            {name: 'description', label: this.$tr('isite.cms.form.description'), field: 'description', align: 'rigth'},
+            {name: 'httpMethod', label: this.$tr('iwebhooks.cms.form.httpMethod'), field: 'httpMethod', align: 'rigth'},
             {
               name: 'created_at', label: this.$tr('isite.cms.form.createdAt'), field: 'createdAt', align: 'left',
               format: val => val ? this.$trd(val) : '-',
@@ -88,7 +102,7 @@ export default {
             },
             {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'left'},
           ],
-          requestParams: {include: 'category'},
+          requestParams: {include: 'category,country'},
           actions: [
             {
               icon: 'fa-regular fa-rocket',
@@ -169,6 +183,19 @@ export default {
                 }
               }
             },
+          },
+          countryId: {
+            value: null,
+            type: 'select',
+            props: {
+              label: this.$tr('isite.cms.label.country'),
+              clearable: true
+            },
+            loadOptions: {
+              apiRoute: 'apiRoutes.qlocations.countries',
+              select: {label: 'name', id: 'id'},
+              filterByQuery: true
+            }
           },
           httpMethod: {
             value: null,
