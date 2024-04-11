@@ -207,6 +207,7 @@ export default {
         {
           props: {
             color: 'primary',
+            class: 'full-width',
             label: this.hook?.actionLabel ?? '',
             loading: this.hook?.isLoading !== 0 || this.loadingBtn
           },
