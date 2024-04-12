@@ -24,7 +24,7 @@ export default {
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'iwebhooks.cms.sidebar.adminCategories',
-    icon: 'fa-light fa-gear',
+    icon: 'fa-light fa-layer-group',
     subHeader: {
       refresh: true,
     }

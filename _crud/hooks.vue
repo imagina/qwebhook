@@ -143,9 +143,8 @@ export default {
             value: '',
             type: 'input',
             isTranslatable: true,
-            required: true,
             props: {
-              label: `${this.$tr('iwebhooks.cms.form.actionLabel')}*`,
+              label: this.$tr('iwebhooks.cms.form.actionLabel'),
             },
           },
           callEveryMinutes: {
@@ -243,6 +242,7 @@ export default {
           props: {
             color: 'primary',
             class: 'full-width',
+            vIf: !!this.hook?.actionLabel,
             label: this.hook?.actionLabel ?? '',
             loading: this.hook?.isLoading !== 0 || this.loadingBtn
           },
