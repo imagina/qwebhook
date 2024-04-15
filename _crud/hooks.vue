@@ -161,6 +161,9 @@ export default {
             value: '',
             type: 'input',
             required: true,
+            help: {
+              description: this.$tr('iwebhooks.cms.label.helpFieldEndpoint')
+            },
             props: {
               label: `${this.$tr('iwebhooks.cms.form.endpoint')}*`,
             },
