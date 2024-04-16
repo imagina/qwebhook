@@ -50,6 +50,7 @@ export default {
   },
   computed: {
     crudData() {
+      const dispatchAcces = !!this.$hasAccess('iwebhooks.hooks.dispatch');
       return {
         crudId: this.crudId,
         entityName: config("main.qwebhook.entityNames.hook"),
@@ -67,7 +68,8 @@ export default {
               label: this.$tr('iwebhooks.cms.form.endpoint'),
               field: 'endpoint',
               align: 'left',
-              action: (col) => this.openModal(col)
+              ...(dispatchAcces ? {action: (col) => this.openModal(col)} : {}),
+
             },
             {
               name: 'category',
@@ -107,7 +109,7 @@ export default {
             {
               icon: 'fa-regular fa-rocket',
               tooltip: this.$tr('iwebhooks.cms.label.dispatch'),
-              vIf: !!this.$auth.hasAccess('iwebhooks.hooks.dispatch'),
+              vIf: dispatchAcces,
               color: 'blue',
               action: (item) => this.openModal(item),
             }
