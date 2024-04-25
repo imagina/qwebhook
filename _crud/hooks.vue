@@ -72,6 +72,12 @@ export default {
 
             },
             {
+              name: 'maskEndpoint',
+              label: this.$tr('iwebhooks.cms.form.maskEndpoint'),
+              field: 'maskEndpoint',
+              align: 'left'
+            },
+            {
               name: 'category',
               label: this.$tr('isite.cms.form.category'),
               field: 'category',
@@ -92,7 +98,6 @@ export default {
               align: 'center',
               format: val => val ? this.$trn(val) : '-',
             },
-            {name: 'description', label: this.$tr('isite.cms.form.description'), field: 'description', align: 'rigth'},
             {name: 'httpMethod', label: this.$tr('iwebhooks.cms.form.httpMethod'), field: 'httpMethod', align: 'rigth'},
             {
               name: 'created_at', label: this.$tr('isite.cms.form.createdAt'), field: 'createdAt', align: 'left',
@@ -165,6 +170,14 @@ export default {
             required: true,
             props: {
               label: `${this.$tr('iwebhooks.cms.form.endpoint')}*`,
+            },
+          },
+          maskEndpoint: {
+            value: '',
+            type: 'input',
+            isTranslatable: true,
+            props: {
+              label: this.$tr('iwebhooks.cms.form.maskEndpoint'),
             },
           },
           categoryId: {
