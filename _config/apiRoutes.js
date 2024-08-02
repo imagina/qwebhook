@@ -8,5 +8,7 @@ export default {
   version: moduleVersion,
   categories: `${urlBase}/categories`,
   hooks: `${urlBase}/hooks`,
-  logs: `${urlBase}/logs`
+  logs: `${urlBase}/logs`,
+  types: `${urlBase}/types`,
+  eventTypes: `${urlBase}/event-types`
 }
