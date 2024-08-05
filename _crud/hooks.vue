@@ -76,6 +76,11 @@ export default {
               field: 'httpMethod',
               align: 'rigth'
             },
+            name: 'status',
+              label: this.$tr('isite.cms.form.status'),
+              field: 'status',
+              align: 'rigth'
+            },
             {
               name: 'endpoint',
               label: this.$tr('iwebhooks.cms.form.endpoint'),
