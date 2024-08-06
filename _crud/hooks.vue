@@ -76,7 +76,8 @@ export default {
               field: 'httpMethod',
               align: 'rigth'
             },
-            name: 'status',
+            {
+              name: 'status',
               label: this.$tr('isite.cms.form.status'),
               field: 'status',
               align: 'rigth'
